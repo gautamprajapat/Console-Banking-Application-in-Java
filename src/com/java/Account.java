@@ -49,6 +49,7 @@ public abstract class Account {
     //method to withdraw fund from account
     // amount>0 and withdraw<=balance
     public abstract void withdraw(double amount);
+    public abstract void checkBalance(int accountNumber);
 
     public abstract  void transfer(double amount);
 

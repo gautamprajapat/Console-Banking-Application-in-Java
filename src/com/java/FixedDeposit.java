@@ -72,6 +72,11 @@ public class FixedDeposit extends Account {
     }
 
     @Override
+    public void checkBalance(int accountNumber) {
+        System.out.println("Your Balance is: "+balance);
+    }
+
+    @Override
     public void transfer(double amount) {
 
     }

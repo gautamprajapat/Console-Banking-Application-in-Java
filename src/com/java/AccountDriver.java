@@ -1,4 +1,5 @@
 package com.java;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class AccountDriver {
@@ -29,10 +30,14 @@ public class AccountDriver {
 
             }
             else if (choice==4) {
+                doCheckBalance(account,numAccount,sc);
+
+            }
+            else if (choice==5) {
                 doTransfer(account,numAccount,sc);
 
             }
-        }while(choice!=5);
+        }while(choice!=6);
 
     }
     public static int accountMenu(Scanner sc)
@@ -111,6 +116,26 @@ public class AccountDriver {
             System.out.println("No account exist whith account number:"+accountNumber);
         }
     }
+    //////// Check Balance
+    public static void doCheckBalance(Account account[],int count,Scanner sc)
+    {
+        //Get the account Number
+        System.out.println("Please Enter account number");
+        int accountNumber=sc.nextInt();
+
+        // search for account
+        int index=searchAccount(account,count,accountNumber);
+        if(index>=0)
+        {
+            //Amount
+
+            account[index].checkBalance(accountNumber);
+
+        }
+        else{
+            System.out.println("No account exist whith account number:"+accountNumber);
+        }
+    }
     ////////////////////////////////////////////////////////////////////
     // Transfer
     public static void doTransfer(Account account[],int count,Scanner sc)
@@ -138,34 +163,38 @@ public class AccountDriver {
         Account account=null;
         int choice=accountMenu(sc);
 
-        int accountNumber;
+        int accountNumber = 0;
         String name = null;
+try {
+    System.out.println("Enter account Number");
+    accountNumber = sc.nextInt();
 
-        System.out.println("Enter account Number");
-        accountNumber=sc.nextInt();
 
-        if(choice==1)
+    if (choice == 1) {
+        //Checking Account
+        System.out.println("Enter transaction fee");
+        double fee = sc.nextDouble();
+        System.out.println("Enter account_holder Name:");
+        name = sc.next();
+        System.out.println("Account Created with user name " + name);
+        System.out.printf("Account Number is %d %n", accountNumber);
+        account = new SavingsAccount(accountNumber, fee, name);
+
+
+    } else {
+        //Seving account
+        System.out.println("Please enter interest rate:");
+        double ir = sc.nextDouble();
+        account = new FixedDeposit(accountNumber, account.interestRate, name);
+    }
+
+}
+
+catch(Exception e)
         {
-            //Checking Account
-            System.out.println("Enter transaction fee");
-            double fee=sc.nextDouble();
-            System.out.println("Enter account_holder Name:");
-            name=sc.next();
-            System.out.println("Account Created with user name "+name);
-            System.out.printf("Account Number is %d %n",accountNumber);
-            account=new SavingsAccount(accountNumber,fee,name);
-
-
-        }else{
-            //Seving account
-            System.out.println("Please enter interest rate:");
-            double ir=sc.nextDouble();
-            account=new FixedDeposit(accountNumber, account.interestRate, name);
+//            System.out.println(e.toString());
         }
         return account;
-
-
-
     }
 
     //Menu to display the option and get user's selection
@@ -175,13 +204,14 @@ public class AccountDriver {
         System.out.println("1.Create new Account");
         System.out.println("2.Deposit fund");
         System.out.println("3.Withdraw funds");
-        System.out.println("4.Transfer Amount");
-        System.out.println("5. Quit");
+        System.out.println("4.Check Balance");
+        System.out.println("5.Transfer Amount");
+        System.out.println("6. Quit");
         int choice;
         do{
             System.out.println("Enter choice");
             choice=sc.nextInt();
-        }while(choice<1 || choice>4);
+        }while(choice<1 || choice>5);
         return choice;
 
     }
