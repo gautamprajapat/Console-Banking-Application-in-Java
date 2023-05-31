@@ -56,4 +56,6 @@ public abstract class Account {
     public abstract void transfer();
 
     public abstract void transfer(double transferAmount, int accountNumber);
+    public abstract void transfer2(double transferAmount, int recieverAccout,int senderAccount);
+
 }

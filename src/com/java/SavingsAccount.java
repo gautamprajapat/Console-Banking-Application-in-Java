@@ -85,4 +85,24 @@ public class SavingsAccount extends Account{
 
 
     }
+////////////////////////////////////////////////////////////////////////////////
+    //Implementing Transfer method
+    @Override
+    public void transfer2(double transferAmount, int recieverAccout, int senderAccount) {
+
+        if(transferAmount >0)
+        {
+
+            System.out.printf("Amount %.2f transfered to account %d %n", transferAmount,recieverAccout);
+            balance+= transferAmount;
+
+
+            System.out.printf("Current balance is: %.2f %n",balance);
+            System.out.printf("Amount %.2f debited from account %d %n", transferAmount,senderAccount);
+            balance-= transferAmount;
+
+
+
+        }
+    }
 }

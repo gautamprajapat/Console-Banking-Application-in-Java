@@ -102,4 +102,9 @@ public class FixedDeposit extends Account {
         }
 
     }
+
+    @Override
+    public void transfer2(double transferAmount, int recieverAccout, int senderAccount) {
+
+    }
 }

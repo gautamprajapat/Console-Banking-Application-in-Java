@@ -37,7 +37,11 @@ public class AccountDriver {
                 doTransfer(account,numAccount,sc);
 
             }
-        }while(choice!=6);
+            else if (choice==6) {
+                doApplyInterest(account,numAccount,sc);
+
+            }
+        }while(choice!=7);
 
     }
     public static int accountMenu(Scanner sc)
@@ -116,6 +120,31 @@ public class AccountDriver {
             System.out.println("No account exist whith account number:"+accountNumber);
         }
     }
+    //// Applying Interest on Fixed Deposit
+    public static void doApplyInterest(Account account[],int count,Scanner sc)
+    {
+        //Get the account Number
+        System.out.println("Please Enter account number");
+        int accountNumber=sc.nextInt();
+
+        // search for account
+        int index=searchAccount(account,count,accountNumber);
+        if(index>=0)
+        {
+            if(account[index] instanceof FixedDeposit)
+            {
+                ((FixedDeposit) account[index]).applyInterest();
+
+            }
+
+
+        }
+        else{
+            System.out.println("No account exist whith account number:"+accountNumber);
+        }
+    }
+
+
     //////// Check Balance
     public static void doCheckBalance(Account account[],int count,Scanner sc)
     {
@@ -164,14 +193,14 @@ public class AccountDriver {
         int choice=accountMenu(sc);
 
         int accountNumber = 0;
-        String name = null;
-try {
+        String name = " ";
+
     System.out.println("Enter account Number");
     accountNumber = sc.nextInt();
 
 
     if (choice == 1) {
-        //Checking Account
+        //Saving Account
         System.out.println("Enter transaction fee");
         double fee = sc.nextDouble();
         System.out.println("Enter account_holder Name:");
@@ -182,18 +211,12 @@ try {
 
 
     } else {
-        //Seving account
+        //Fixed account
         System.out.println("Please enter interest rate:");
         double ir = sc.nextDouble();
-        account = new FixedDeposit(accountNumber, account.interestRate, name);
+        account = new FixedDeposit(accountNumber, ir, name);
     }
 
-}
-
-catch(Exception e)
-        {
-//            System.out.println(e.toString());
-        }
         return account;
     }
 
@@ -206,12 +229,13 @@ catch(Exception e)
         System.out.println("3.Withdraw funds");
         System.out.println("4.Check Balance");
         System.out.println("5.Transfer Amount");
-        System.out.println("6. Quit");
+        System.out.println("6.Show Fixed Deposit Amount");
+        System.out.println("7. Quit");
         int choice;
         do{
             System.out.println("Enter choice");
             choice=sc.nextInt();
-        }while(choice<1 || choice>5);
+        }while(choice<1 || choice>6);
         return choice;
 
     }
